@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Breast Cancer Detection System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <style type="text/css">
+    body {
+        background: #efd4e6;
+        color: #402637;
+    }
+
+    .content {
+        background: #d88abe !important;
+    }
+
+    .panel-breast {
+        background-color: #f3b7df;
+    }
+
+    .navbar-default {
+        background-color: #f3b7df;
+        border-color: #f3b7df;
+    }
+
+    #jumbotron-index {
+        background-image: url('../static/img/walk.jpg');
+        background-position: center;
+
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #864470;
+        border-color: #c1c1c1;
+    }
+
+    .btn-danger:hover {
+        background-color: #d88abe;
+        border-color: #864470;
+
+    }
+
+    .alert-danger {
+        color: #ffffff;
+        background-color: #864470;
+        border-color: #d88abe;
+    }
+
+    .row {
+        height: 490px;
+    }
+
+    input[type="file"] {
+    display: block;
+    background-color: #d88abe;
+    line-height: 30px;
+    border: solid 1px;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container content">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">BreastCancer</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <!--                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                        </ul> -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% block navform %}
+                        {% endblock navform %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </nav><!-- End of Navbar -->
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger" style="margin-bottom: 37px;">{{ message }}</div>
+        {% endfor %}
+        {% if error %}
+        <div class="error">
+            <strong>Error:</strong>{{ error }}
+        </div>
+        {% endif %}
+        {% block content %}
+        {% endblock content %}
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Copyright &copy; 2019</span>
+            </div>
+        </footer>
+    </div> <!-- End of main container -->
+</body>
+
+</html>

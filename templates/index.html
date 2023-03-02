@@ -1,0 +1,64 @@
+{% extends '_base.html' %}
+{% block navform %} <form class="navbar-form navbar-left" action="{{ url_for('index') }}" method="post">
+    <div class="form-group">
+        <input type="email" class="form-control" placeholder="Email" name="email" required="required">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control " placeholder="Password" name="password" required="required">
+    </div>
+    <button type="submit" class="btn btn-danger">Login</button>
+</form>
+{% endblock navform %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-2">
+        <div class="panel panel-breast">
+            <div class="panel-body">
+                 <div class="media">
+            <a  href="#">
+                <img class="media-object" src="{{ url_for('static', filename='img/ribbon.jpeg')}}" style="border: solid 3px azure;width: 100%;">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">Breast Cancer</h4>
+                <p class="text-justify small">Signs may include a lump in the breast, a change in breast shape, dimpling of the skin, fluid coming from the nipple, a newly inverted nipple, or a red or scaly patch of skin.In those with distant spread of the disease, there may be bone pain, swollen lymph nodes, shortness of breath, or yellow skin.  </p>
+            </div>
+        </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="col-lg-7">
+        <div class="jumbotron jumbotron-fluid" style="height: 363px" id="jumbotron-index">
+            <div class="container text-center" style="background: #dc143c66;color: seashell;border: solid 1px #deb88799;border-radius: 135px 135px 135px 0px">
+                <h1 class="display-3">Breast cancer</h1>
+                <p class="lead">Create account and get started </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="panel panel-breast ">
+            <div class="panel-body">
+                <form class="" action="{{ url_for('create_account') }}" method="post">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" placeholder="Name" required="required" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" placeholder="Email" required="required" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" name="dob" id="input" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required="required" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

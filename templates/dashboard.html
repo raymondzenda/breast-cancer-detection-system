@@ -1,0 +1,160 @@
+{% extends '_base.html' %}
+{% block navform %}
+<ul class="nav navbar-nav">
+    <li><a href="#">Hi, {{ current_user.name }}</a></li>
+    <li style="text-transform: uppercase;"><a href="{{ url_for('logout') }}">Logout</a></li>
+</ul>
+{% endblock navform %}
+{% block content %}
+{% if current_user.role != 'doctor' %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="jumbotron jumbotron-fluid" style="height: 277px;background-image: url('../static/img/happy-girl.jpeg'); background-position: center;">
+            <h3 class="display-3" style="color: seashell;">Upload image for screening</h3>
+            <form action="{{ url_for('predict') }}" method="POST" class="form-inline" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="file" id="" required="required" name="file">
+                </div>
+                <button type="submit" class="btn btn-danger">send image </button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-danger" style="height: 277px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Medical Record: {{ current_user.name | capitalize }}</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-responsive table-striped small">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ current_user.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ current_user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>Dob</td>
+                            <td>{{ current_user.dob }}</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td>{{ current_user.age }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prognosis</td>
+                            <td><b>{{ current_user.prognosis }}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-lg-3">
+           <div class="panel panel-danger" style="height: 277px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">General Summary Statistics </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-responsive table-striped small">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    
+                        <tr>
+                            <td><b>Total Patients</b></td>
+                            <td>{{ info['total_patients'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Benign Patients</b></td>
+                            <td>{{ info['total_benign'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Malignant Patients</b></td>
+                            <td>{{ info['total_malignant'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Malignant Patients < 30yrs </b></td>
+                            <td>{{ info['malignant_under_30'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Benign Patients < 30yrs </b></td>
+                            <td>{{ info['benign_under_30'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Malignant Patients > 30yrs </b></td>
+                            <td>{{ info['malignant_over_30'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Benign Patients > 30yrs </b></td>
+                            <td>{{ info['benign_over_30'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <!-- Main doctors content goes here  -->
+        <div class="panel panel-danger" style="min-height: 277px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Patients Records and Reports </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-responsive table-striped small">
+                    <thead>
+                        <tr>
+                            <th> Name </th>
+                            <th> Dob </th>
+                            <th> Age </th>
+                            <th> Breast Class </th>
+                            <th> Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in patients %}
+                        <tr>
+                            <td>{{ patient.name | capitalize }}</td>
+                            <td>{{ patient.dob }}</td>
+                            <td>{{ patient.age }}</td>
+                            <td>{{ patient.status }}</td>
+                            <td>
+                                {% if patient.status %}
+                                {% if patient.prognosis%}
+                                {{ patient.prognosis }}
+                                {% else %}
+                                <form action="{{ url_for('prognosis', uid=patient.id) }}" method="POST" class="form-inline" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control small" name="prognosis" id="recommend-input" placeholder="send counselling" style="height: 27px;">
+                                </div>
+                                <button type="submit" class="btn btn-danger btn-sm">counsel</button>
+                            </form>
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- End doctors content  -->
+    <div class="col-lg-1"></div>
+</div>
+{% endif %}
+{% endblock content %}
